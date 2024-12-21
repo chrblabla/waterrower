@@ -10,8 +10,18 @@ Ever wanted to read out the data from your WaterRower and maybe even record and 
 
 ### Live Data Capture
 
-not all data, but a sequence is being used to keep the reading stable
-and published via MQTT
+The data is being read out based on a certain sequence which keeps the reading stable:
+
+```mermaid
+flowchart TD
+    A{Stroke Start 'SS'} -->|calculate| B(Cadence)
+    A -->|query| C(Power)
+    C -->|query| D(Stroke Count)
+    E{Every 500 ms} -->|query| F(Distance)
+    F -->|query| G(Pace)
+```
+
+With every new data point, the data is also published to MQTT.
 
 ### Live Dashboard
 
@@ -47,7 +57,7 @@ The WaterRower needs to be connected with a USB cable.
 
 ### Running the program
 
-The dashboard is being started with `$ docker compose up`.
+The dashboard is being started with `$ docker compose up`. The dashboard can be accessed under http://localhost:1880/dashboard.
 
 The program is being started with `$ npm start` and not included in the command above (see [limitations](#limitations)).
 
