@@ -1,0 +1,16 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    command: mosquitto -c /mosquitto-no-auth.conf
+    ports:
+      - 1883:1883
+  dashboard:
+    image: nodered/node-red
+    ports:
+      - 1880:1880
+    volumes:
+      - ./nodered:/data
+  # reader:
+  #   build: .
+  #   volumes:
+  #     - /dev/tty.usbmodem101:/dev/tty.usbmodem101
