@@ -32,38 +32,42 @@ class WaterRowerS4 {
   private cadence: Measurement = { metric: "cadence", unit: "spm", value: 0 }
   private split: Measurement = { metric: "split", unit: "s/500 m", value: 0}
 
-  start = async () => {
+  constructor() {
     // Set up connection to MQTT for the dashboard
     this.mqttClient = mqtt.connect("mqtt://localhost")
+  }
 
-    // Set up file writer
-    this.setUpFileWriter()
+  start = async () => {
+    if (!this.port) {
+      // Set up connection to WaterRower
+      this.waterRower = await this.findDevice()
 
-    // Set up connection to WaterRower
-    this.waterRower = await this.findDevice()
+      if (!this.waterRower) {
+        console.error("No WaterRower found. Please check the USB connection.")
+        return
+      }
 
-    if (!this.waterRower) {
-      console.error("No WaterRower found. Please check the USB connection.")
-      return
+      this.port = new SerialPort({
+        path: this.waterRower.path,
+        baudRate: 115200,
+      })
     }
 
-    this.port = new SerialPort({
-      path: this.waterRower.path,
-      baudRate: 115200,
-    })
+    this.distance.value = 0
+    this.power.value = 0
+    this.strokes.value = 0
+    this.speed.value = 0
+    this.cadence.value = 0
+    this.split.value = 0
 
     this.port.on("data", this.onData)
 
     this.send("USB")
-
-    // Save finishing information to file
-    process.once("SIGINT", () => {
-      this.exit()
-    })
   }
 
-  setUpFileWriter = () => {
+  openFile = () => {
     const now = Date.now()
+    this.fitTimestampStart = Math.floor(Date.now() / 1000) - GARMIN_EPOCH
     this.fileWriter = fs.createWriteStream(`trainings/${now}.fit.csv`)
     this.fileWriter.write("Type,Local Number,Message,Field 1,Value 1,Units 1,Field 2,Value 2,Units 2,Field 3,Value 3,Units 3,Field 4,Value 4,Units 4,Field 5,Value 5,Units 5\n")
     this.fileWriter.write("Definition,0,file_id,serial_number,1,,time_created,1,,manufacturer,1,,type,1,\n")
@@ -73,13 +77,33 @@ class WaterRowerS4 {
     this.fileWriter.write("Definition,3,activity,timestamp,1,,num_sessions,1,\n")
   }
 
-  exit = () => {
+  closeFile = () => {
+    const fitTimestampEnd = Math.floor(Date.now() / 1000) - GARMIN_EPOCH
+    const sessionDuration = fitTimestampEnd - this.fitTimestampStart
+
+    this.fileWriter.write(`Data,2,session,timestamp,\"${this.fitTimestampStart}\",s,start_time,\"${this.fitTimestampStart}\",,`)
+    this.fileWriter.write(`total_elapsed_time,\"${sessionDuration}\",s,`)
+    this.fileWriter.write(`total_distance,\"${this.distance.value}\",m,`)
+    this.fileWriter.write(`total_cycles,\"${this.strokes.value}\",cycles,`)
+    this.fileWriter.write("sport,\"15\",,sub_sport,\"14\",\n")
+
+    this.fileWriter.write(`Data,3,activity,timestamp,\"${this.fitTimestampStart}\",,num_sessions,\"1\",\n`)
+  }
+
+  stop = (exit: boolean) => {
     // stop recording
     if (this.port) {
       this.port.off("data", this.onData)
     }
+
+    if (this.recordingInterval) {
+      clearInterval(this.recordingInterval)
+      this.recordingInterval = null
+    }
+
     if (this.lastStrokeTimestamp) {
       clearInterval(this.lastStrokeTimestamp)
+      this.lastStrokeTimestamp = null
     }
 
     console.log("Finalizing workout file")
@@ -94,7 +118,9 @@ class WaterRowerS4 {
       this.fileWriter.write("sport,\"15\",,sub_sport,\"14\",\n")
     this.fileWriter.write(`Data,3,activity,timestamp,\"${this.fitTimestampStart}\",,num_sessions,\"1\",\n`)
     this.fileWriter.close(() => {
-      process.exit()
+      if (exit) {
+        process.exit()
+      }
     })
   }
 
@@ -107,7 +133,15 @@ class WaterRowerS4 {
 
     if (stringData.startsWith("IV4")) {
       const firmwareVersion = stringData.substring(3, 5) + "." + stringData.substring(5, 7)
-      console.log("Initialized WaterRower S4 with firmware version", firmwareVersion)
+      console.log("Using WaterRower S4 with firmware version", firmwareVersion)
+    }
+
+    if (stringData.startsWith("AKR")) {
+      console.log("\nReset")
+      clearInterval(this.recordingInterval)
+      this.stop(false)
+      this.start()
+      return
     }
 
     // To keep things simple, there's a chain in which data gets queried:
@@ -121,13 +155,17 @@ class WaterRowerS4 {
       // start recording if no recording is active
       // recording takes whichever data is available at any given second and saves it to file.
       if (!this.recordingInterval) {
-        console.log("Starting session")
+        console.log("Starting new session")
+
+        this.openFile()
+
         this.recordingInterval = setInterval(() => {
           this.record()
         }, 1000) // FIT files have a second-based resolution
       }
 
-      console.log("Stroke")
+      // console.log("Stroke")
+      process.stdout.write(".")
 
       this.parseAndPublishData("", "cadence") // calculate and update cadence
 
@@ -239,4 +277,7 @@ class WaterRowerS4 {
 }
 
 const waterRower = new WaterRowerS4()
+process.once("SIGINT", () => {
+  waterRower.stop(true)
+})
 await waterRower.start()
