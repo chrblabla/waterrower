@@ -4,7 +4,7 @@ Ever wanted to read out the data from your WaterRower and maybe even record and 
 
 ## Features
 
-1. [Live data capture from the WaterRower S4 computer.](#live-data-capture)
+1. [Capturing live data from the WaterRower S4 computer.](#live-data-capture)
 2. [Providing a live dashboard with the most important information.](#live-dashboard)
 3. [Recording an activity to a FIT-compatible CSV.](#fit-activity)
 
