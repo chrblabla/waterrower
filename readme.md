@@ -43,6 +43,7 @@ On every first stroke after starting the program, an activity is being recorded 
 ```bash
 $ java -jar FitCSVTool.jar -c INPUT.csv.fit OUTPUT.fit
 ```
+java -jar ~/Downloads/FitSDKRelease_21.141.00/java/FitCSVTool.jar
 
 ## Getting Started
 
