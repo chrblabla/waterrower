@@ -10,8 +10,8 @@
     "lint": "eslint src/index.ts"
   },
   "dependencies": {
-    "@types/node": "^22",
-    "bleno": "npm:@abandonware/bleno@^0.6.1",
+    "@abandonware/noble": "^1.9.2-26",
+    "@types/node": "^24",
     "mqtt": "^5.10.2",
     "serialport": "^13"
   },

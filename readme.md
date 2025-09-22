@@ -50,7 +50,7 @@ java -jar ~/Downloads/FitSDKRelease_21.141.00/java/FitCSVTool.jar
 ### Requirements
 
 - [Docker](https://www.docker.com)
-- [Node.js 22](https://nodejs.org/en)
+- [Node.js 24](https://nodejs.org/en)
 
 Dependencies for are being installed via `$ npm i`.
 
