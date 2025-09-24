@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "tsc && node build/index.js",
+    "start": "node build/index.js",
     "lint": "eslint src/index.ts"
   },
   "dependencies": {

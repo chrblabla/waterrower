@@ -874,8 +874,8 @@
         "className": "",
         "icon": "",
         "iconPosition": "left",
-        "payload": "",
-        "payloadType": "str",
+        "payload": "0",
+        "payloadType": "num",
         "topic": "topic",
         "topicType": "msg",
         "buttonColor": "",
@@ -892,7 +892,8 @@
         "y": 60,
         "wires": [
             [
-                "6bdd917d9a2b1549"
+                "a3bf800f6cc453ba",
+                "77bfb19cd332d4ae"
             ]
         ]
     },
