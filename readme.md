@@ -75,3 +75,7 @@ flowchart TD
 ## Limitations
 
 Unfortunately, Docker under macOS does not map the USB device into the container which prevents this from running completely in Docker.
+
+## Useful Links
+
+- https://rowingwithwatts.com/rowing-machine-calorie-calculator/
