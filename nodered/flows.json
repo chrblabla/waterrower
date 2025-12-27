@@ -50,7 +50,6 @@
             "ui-control"
         ],
         "showPathInSidebar": false,
-        "showPageTitle": true,
         "navigationStyle": "default",
         "titleBarStyle": "default"
     },
@@ -116,7 +115,7 @@
         "page": "6be9d1ec86680b2f",
         "width": "4",
         "height": "1",
-        "order": 2,
+        "order": 1,
         "showTitle": true,
         "className": "",
         "visible": "true",
@@ -130,7 +129,7 @@
         "page": "6be9d1ec86680b2f",
         "width": "4",
         "height": "1",
-        "order": 3,
+        "order": 2,
         "showTitle": true,
         "className": "",
         "visible": "true",
@@ -144,21 +143,7 @@
         "page": "6be9d1ec86680b2f",
         "width": "4",
         "height": 1,
-        "order": 4,
-        "showTitle": true,
-        "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
-        "id": "fee0a80e078f8d50",
-        "type": "ui-group",
-        "name": "Controls",
-        "page": "6be9d1ec86680b2f",
-        "width": "12",
-        "height": 1,
-        "order": 1,
+        "order": 3,
         "showTitle": true,
         "className": "",
         "visible": "true",
@@ -203,7 +188,7 @@
         "xAxisPropertyType": "timestamp",
         "xAxisType": "time",
         "xAxisFormat": "",
-        "xAxisFormatType": "auto",
+        "xAxisFormatType": "HH:mm:ss",
         "xmin": "",
         "xmax": "",
         "yAxisLabel": "",
@@ -217,8 +202,8 @@
         "pointShape": "circle",
         "pointRadius": 4,
         "showLegend": false,
-        "removeOlder": "2",
-        "removeOlderUnit": "60",
+        "removeOlder": "120",
+        "removeOlderUnit": "1",
         "removeOlderPoints": "",
         "colors": [
             "#0095ff",
@@ -262,7 +247,7 @@
         "gstyle": "needle",
         "title": "Cadence",
         "units": "spm",
-        "icon": "",
+        "icon": "repeat",
         "prefix": "",
         "suffix": "",
         "segments": [
@@ -297,7 +282,9 @@
         "className": "",
         "x": 680,
         "y": 140,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "80484b4ae94002bc",
@@ -461,7 +448,7 @@
         "gstyle": "needle",
         "title": "Power",
         "units": "W",
-        "icon": "",
+        "icon": "lightning-bolt",
         "prefix": "",
         "suffix": "",
         "segments": [
@@ -496,7 +483,9 @@
         "className": "",
         "x": 670,
         "y": 600,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "56b12bdd3dfedafc",
@@ -514,7 +503,7 @@
         "xAxisPropertyType": "timestamp",
         "xAxisType": "time",
         "xAxisFormat": "",
-        "xAxisFormatType": "auto",
+        "xAxisFormatType": "HH:mm:ss",
         "xmin": "",
         "xmax": "",
         "yAxisLabel": "",
@@ -528,8 +517,8 @@
         "pointShape": "circle",
         "pointRadius": 4,
         "showLegend": false,
-        "removeOlder": "2",
-        "removeOlderUnit": "60",
+        "removeOlder": "120",
+        "removeOlderUnit": "1",
         "removeOlderPoints": "",
         "colors": [
             "#0095ff",
@@ -682,10 +671,10 @@
         "y": 720,
         "wires": [
             [
-                "956745ae3c107855",
                 "804da995998eb394",
                 "6f458d8e8bc5e985",
-                "e09a76db8347a94b"
+                "956745ae3c107855",
+                "fa2d8ec76f19eb61"
             ]
         ]
     },
@@ -705,7 +694,7 @@
         "xAxisPropertyType": "timestamp",
         "xAxisType": "time",
         "xAxisFormat": "",
-        "xAxisFormatType": "auto",
+        "xAxisFormatType": "HH:mm:ss",
         "xmin": "",
         "xmax": "",
         "yAxisLabel": "",
@@ -719,8 +708,8 @@
         "pointShape": "circle",
         "pointRadius": 4,
         "showLegend": false,
-        "removeOlder": "2",
-        "removeOlderUnit": "60",
+        "removeOlder": "120",
+        "removeOlderUnit": "1",
         "removeOlderPoints": "",
         "colors": [
             "#0095ff",
@@ -763,8 +752,8 @@
         "gtype": "gauge-half",
         "gstyle": "needle",
         "title": "Heart Rate",
-        "units": "units",
-        "icon": "",
+        "units": "bpm",
+        "icon": "heart",
         "prefix": "",
         "suffix": "",
         "segments": [
@@ -791,7 +780,9 @@
         "className": "",
         "x": 690,
         "y": 720,
-        "wires": []
+        "wires": [
+            []
+        ]
     },
     {
         "id": "714f31c26b0fc647",
@@ -858,51 +849,11 @@
         "wires": []
     },
     {
-        "id": "dab38a7eedcc937c",
-        "type": "ui-button",
-        "z": "02e369ca3e861a88",
-        "group": "fee0a80e078f8d50",
-        "name": "",
-        "label": "Clear",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "emulateClick": false,
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
-        "iconPosition": "left",
-        "payload": "0",
-        "payloadType": "num",
-        "topic": "topic",
-        "topicType": "msg",
-        "buttonColor": "",
-        "textColor": "",
-        "iconColor": "",
-        "enableClick": true,
-        "enablePointerdown": false,
-        "pointerdownPayload": "",
-        "pointerdownPayloadType": "str",
-        "enablePointerup": false,
-        "pointerupPayload": "",
-        "pointerupPayloadType": "str",
-        "x": 370,
-        "y": 60,
-        "wires": [
-            [
-                "a3bf800f6cc453ba",
-                "77bfb19cd332d4ae"
-            ]
-        ]
-    },
-    {
-        "id": "6bdd917d9a2b1549",
+        "id": "fa2d8ec76f19eb61",
         "type": "function",
         "z": "02e369ca3e861a88",
         "name": "function 6",
-        "func": "context.set(\"maxpower\", 0)\ncontext.set(\"maxheartrate\", 0)\nreturn msg",
+        "func": "msg.payload = msg.payload + \" bpm\"\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -910,11 +861,10 @@
         "finalize": "",
         "libs": [],
         "x": 540,
-        "y": 60,
+        "y": 800,
         "wires": [
             [
-                "5a6dfa2edd3095a1",
-                "6f458d8e8bc5e985"
+                "e09a76db8347a94b"
             ]
         ]
     }

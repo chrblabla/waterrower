@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "4.0.9",
+        "version": "4.1.1",
         "local": false,
         "user": false,
         "nodes": {
@@ -429,7 +429,7 @@
     },
     "@flowfuse/node-red-dashboard": {
         "name": "@flowfuse/node-red-dashboard",
-        "version": "1.19.1",
+        "version": "1.29.0",
         "local": true,
         "user": true,
         "nodes": {
@@ -664,6 +664,17 @@
                 "module": "@flowfuse/node-red-dashboard",
                 "file": "/data/node_modules/@flowfuse/node-red-dashboard/nodes/widgets/ui_notification.js"
             },
+            "ui-audio": {
+                "name": "ui-audio",
+                "types": [
+                    "ui-audio"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@flowfuse/node-red-dashboard",
+                "file": "/data/node_modules/@flowfuse/node-red-dashboard/nodes/widgets/ui_audio.js"
+            },
             "ui-markdown": {
                 "name": "ui-markdown",
                 "types": [
@@ -707,7 +718,19 @@
                 "user": false,
                 "module": "@flowfuse/node-red-dashboard",
                 "file": "/data/node_modules/@flowfuse/node-red-dashboard/nodes/widgets/ui_control.js"
+            },
+            "ui-progress": {
+                "name": "ui-progress",
+                "types": [
+                    "ui-progress"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "@flowfuse/node-red-dashboard",
+                "file": "/data/node_modules/@flowfuse/node-red-dashboard/nodes/widgets/ui_progress.js"
             }
-        }
+        },
+        "pending_version": "1.30.0"
     }
 }
